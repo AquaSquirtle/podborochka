@@ -1,0 +1,48 @@
+---
+- name: Install Docker and obtain Podborochka from GitHub
+  hosts: app
+  become: true
+  gather_facts: true
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    - name: Require an Ubuntu server with a supported architecture
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['distribution'] == 'Ubuntu'
+          - ansible_facts['architecture'] in docker_architectures
+        fail_msg: This playbook targets Ubuntu on amd64 or arm64, not macOS.
+      tags: [always]
+
+    - name: Find the existing deployment account
+      ansible.builtin.getent:
+        database: passwd
+        key: "{{ deploy_user }}"
+      tags: [always]
+
+    - name: Locate the deployment account home directory
+      ansible.builtin.set_fact:
+        deploy_home: "{{ ansible_facts['getent_passwd'][deploy_user][4] }}"
+      tags: [always]
+
+  tasks:
+    - name: Install Docker Engine and Compose
+      ansible.builtin.import_tasks: tasks/docker.yml
+      tags: [docker]
+
+    - name: Prepare a dedicated GitHub SSH key
+      ansible.builtin.import_tasks: tasks/ssh.yml
+      tags: [ssh]
+
+    - name: Obtain or update the project
+      become_user: "{{ deploy_user }}"
+      block:
+        - name: Checkout project from GitHub
+          ansible.builtin.import_tasks: tasks/checkout.yml
+      rescue:
+        - name: Explain GitHub access prerequisites
+          ansible.builtin.fail:
+            msg: >-
+              Git checkout failed
+      tags: [git]

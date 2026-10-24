@@ -1,0 +1,7 @@
+---
+app:
+  hosts:
+    ubuntu_server:
+      ansible_host: 192.0.2.10  # Replace with the actual server address.
+      ansible_user: ubuntu
+      ansible_python_interpreter: /usr/bin/python3

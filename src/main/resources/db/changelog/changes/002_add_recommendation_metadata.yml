@@ -1,0 +1,21 @@
+databaseChangeLog:
+  - changeSet:
+      id: 010-add-metadata-to-gift-recommendations
+      author: openai
+      changes:
+        - sql:
+            sql: |
+              ALTER TABLE gift_recommendations
+              ADD COLUMN approximate_price INT,
+              ADD COLUMN search_query TEXT,
+              ADD COLUMN ozon_search_url TEXT,
+              ADD COLUMN wildberries_search_url TEXT,
+              ADD COLUMN yandex_market_search_url TEXT;
+      rollback:
+        - sql:
+            sql: |
+              ALTER TABLE gift_recommendations DROP COLUMN IF EXISTS yandex_market_search_url;
+              ALTER TABLE gift_recommendations DROP COLUMN IF EXISTS wildberries_search_url;
+              ALTER TABLE gift_recommendations DROP COLUMN IF EXISTS ozon_search_url;
+              ALTER TABLE gift_recommendations DROP COLUMN IF EXISTS search_query;
+              ALTER TABLE gift_recommendations DROP COLUMN IF EXISTS approximate_price;

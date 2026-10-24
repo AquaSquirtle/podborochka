@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подборочка — подбор подарков</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/frontend.css">
+    <script type="module" src="/scripts/app.js"></script>
+</head>
+<body class="page" data-page="index">
+<!-- component:header -->
+<main class="main">
+    <section class="hero">
+        <h1 class="hero__title">Ваш личный ИИ-помощник по подбору подарков</h1>
+        <p class="hero__subtitle">Забудьте о часах мучительных поисков! Наш искусственный интеллект анализирует интересы, предпочтения и бюджет, чтобы найти идеальный подарок за 2 минуты.</p>
+
+        <article class="ai-features">
+            <h2 class="ai-features__title">Почему наш ИИ умнее обычного поиска?</h2>
+            <ul class="ai-features__list">
+                <li class="ai-features__item"><strong>Понимает контекст</strong> - <em>анализирует</em> увлечения человека</li>
+                <li class="ai-features__item"><strong>Учитывает бюджет</strong> - подбирает варианты по вашей цене</li>
+                <li class="ai-features__item"><strong>Работает в реальном времени</strong> - проверяет актуальные цены и наличие</li>
+                <li class="ai-features__item"><strong>Учится на предпочтениях</strong> - предлагает все более точные варианты</li>
+            </ul>
+        </article>
+
+        <a href="/chat" class="button hero__button">Выбрать подарок</a>
+    </section>
+
+    <section class="how-to-work">
+        <h2 class="how-to-work__title">Как получить идеальный подарок за 3 шага</h2>
+
+        <ol class="how-to-work__steps">
+            <li class="how-to-work__step">
+                <h3 class="how-to-work__step-title">Ответьте на вопросы ИИ</h3>
+                <p class="how-to-work__step-text">Расскажите о человеке: интересы, хобби, возраст, повод и бюджет. Чем больше деталей - тем точнее подбор!</p>
+            </li>
+            <li class="how-to-work__step">
+                <h3 class="how-to-work__step-title">Дождитесь анализа</h3>
+                <p class="how-to-work__step-text">Наш ИИ проанализирует тысячи вариантов и предложит 3-5 самых релевантных подарков с прямыми ссылками на маркетплейсы.</p>
+            </li>
+            <li class="how-to-work__step">
+                <h3 class="how-to-work__step-title">Выбирайте и радуйте!</h3>
+                <p class="how-to-work__step-text">Остается только выбрать понравившийся вариант и оформить заказ. Мы сразу перенаправим вас в магазин.</p>
+            </li>
+        </ol>
+        <a href="/chat" class="button how-to-work__button">Выбрать подарок</a>
+    </section>
+
+    <section class="advantages">
+        <h2 class="advantages__title">Почему лучше выбирать Podborochka при выборе подарка?</h2>
+
+        <div class="advantages__grid">
+            <article class="advantage">
+                <h3 class="advantage__title">Экономия времени</h3>
+                <p class="advantage__text">Вместо часов поисков в интернете и магазинах, наш ИИ находит идеальные варианты за считанные минуты. Вы получаете готовые решения, а не тратите время на перебор сотен неподходящих товаров.</p>
+            </article>
+
+            <article class="advantage">
+                <h3 class="advantage__title">Персонализированный подход</h3>
+                <p class="advantage__text">Мы учитываем не только очевидные интересы, но и тонкие нюансы характера получателя. Наш алгоритм анализирует сотни параметров, чтобы подарок действительно порадовал человека.</p>
+            </article>
+
+            <article class="advantage">
+                <h3 class="advantage__title">Избавление от стресса</h3>
+                <p class="advantage__text">Больше не нужно переживать, понравится ли подарок. Наш ИИ имеет высокую точность рекомендаций, подтвержденную тысячами довольных пользователей.</p>
+            </article>
+
+            <article class="advantage">
+                <h3 class="advantage__title">Широкий охват вариантов</h3>
+                <p class="advantage__text">Podborochka анализирует предложения с десятков маркетплейсов и нишевых магазинов, находя уникальные варианты, которые вы могли бы пропустить при самостоятельном поиске.</p>
+            </article>
+
+            <article class="advantage">
+                <h3 class="advantage__title">Объективность выбора</h3>
+                <p class="advantage__text">Искусственный интеллект не подвержен эмоциям и субъективным предпочтениям, что позволяет ему выбирать действительно релевантные подарки, а не то, что нравится лично вам.</p>
+            </article>
+
+            <article class="advantage">
+                <h3 class="advantage__title">Актуальность информации</h3>
+                <p class="advantage__text">Наш сервис проверяет наличие товаров и актуальные цены в реальном времени, поэтому вы не столкнетесь с ситуацией, когда выбранный подарок уже недоступен или стоит дороже.</p>
+            </article>
+
+            <article class="advantage advantage--wide">
+                <h3 class="advantage__title">Прозрачность алгоритма</h3>
+                <p class="advantage__text">Наш ИИ работает на понятных принципах...</p>
+                <div class="advantage__code">
+                        <pre class="advantage__code-snippet"><code>
+//Пример логики подбора подарка
+function findPerfectGift(person, occasion) {
+    const interests = analyzeInterests(person);
+    const budget = calculateOptimalBudget(person);
+    const gifts = searchRelevantGifts(interests, budget);
+
+    return selectTopMatch(gifts, occasion);
+}
+//Для вас это выглядит просто:
+const idealGift = findPerfectGift("друг", "день рождения");
+</code></pre>
+                </div>
+            </article>
+        </div>
+
+        <aside class="testimonial">
+            <blockquote class="testimonial__quote">
+                <p class="testimonial__text">"Раньше я тратил <del>несколько дней</del> на поиск подарков, теперь с Podborochka нахожу идеальный вариант <ins>за 15 минут</ins>!"</p>
+                <cite class="testimonial__author">— Александр Петров, постоянный пользователь</cite>
+            </blockquote>
+        </aside>
+
+        <a href="/chat" class="button advantages__button">Выбрать подарок</a>
+    </section>
+
+    <section class="cta">
+        <h2 class="cta__title">Готовы найти идеальный подарок?</h2>
+        <p class="cta__text">Не откладывайте на потом! Начните диалог с ИИ-помощником прямо сейчас.</p>
+        <a href="/chat" class="button cta__button">Выбрать подарок</a>
+    </section>
+
+    <section class="stats">
+        <h2 class="stats__title">Популярные категории подарков</h2>
+        <table class="stats__table">
+            <thead class="stats__table-head">
+            <tr class="stats__table-row">
+                <th class="stats__table-header">Категория</th>
+                <th class="stats__table-header">Пример подарка</th>
+                <th class="stats__table-header">Средняя цена</th>
+            </tr>
+            </thead>
+            <tbody class="stats__table-body">
+            <tr class="stats__table-row">
+                <td class="stats__table-cell" data-label="Категория">Технологии</td>
+                <td class="stats__table-cell" data-label="Пример подарка">Умные часы</td>
+                <td class="stats__table-cell" data-label="Средняя цена">≈ 12 000 ₽</td>
+            </tr>
+            <tr class="stats__table-row">
+                <td class="stats__table-cell" data-label="Категория">Хобби</td>
+                <td class="stats__table-cell" data-label="Пример подарка">Набор для рисования</td>
+                <td class="stats__table-cell" data-label="Средняя цена">≈ 3 500 ₽</td>
+            </tr>
+            <tr class="stats__table-row">
+                <td class="stats__table-cell" data-label="Категория">Дом и уют</td>
+                <td class="stats__table-cell" data-label="Пример подарка">Арома-свечи</td>
+                <td class="stats__table-cell" data-label="Средняя цена">≈ 1 200 ₽</td>
+            </tr>
+            <tr class="stats__table-row">
+                <td class="stats__table-cell" data-label="Категория">Спорт</td>
+                <td class="stats__table-cell" data-label="Пример подарка">Фитнес-браслет</td>
+                <td class="stats__table-cell" data-label="Средняя цена">≈ 4 000 ₽</td>
+            </tr>
+            <tr class="stats__table-row">
+                <td class="stats__table-cell" data-label="Категория">Путешествия</td>
+                <td class="stats__table-cell" data-label="Пример подарка">Органайзер для чемодана</td>
+                <td class="stats__table-cell" data-label="Средняя цена">≈ 1 800 ₽</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+<!-- component:footer -->
+</body>
+</html>

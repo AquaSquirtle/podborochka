@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чат — Подборочка</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/frontend.css">
+    <script type="module" src="/scripts/app.js"></script>
+</head>
+<body class="page" data-page="chat">
+<!-- component:header -->
+<main class="chat-layout">
+    <aside class="chat-sidebar">
+        <div class="chat-sidebar__header">
+            <h2 class="chat-sidebar__title">Мои чаты</h2>
+            <button type="button" class="button chat-sidebar__new-button" id="new-conversation-btn">
+                Новый чат
+            </button>
+        </div>
+
+        <div class="chat-sidebar__list" id="conversation-list">
+            <p class="chat-sidebar__empty">Загрузка чатов...</p>
+        </div>
+    </aside>
+
+    <section class="chat-main">
+        <div class="chat__window" id="chat-window">
+            <p class="chat__placeholder" id="chat-placeholder">
+                ИИ готов помочь — задайте вопрос!
+            </p>
+        </div>
+
+        <form class="chat__form" id="chat-form">
+            <input
+                    class="chat__input"
+                    id="chat-input"
+                    name="prompt"
+                    type="text"
+                    placeholder="Введите сообщение..."
+                    autocomplete="off"
+            >
+            <button type="submit" class="button chat__button" id="chat-submit">
+                Отправить
+            </button>
+        </form>
+    </section>
+</main>
+<!-- component:footer -->
+</body>
+</html>

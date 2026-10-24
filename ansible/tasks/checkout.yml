@@ -1,0 +1,16 @@
+---
+- name: Clone or update the specified project version
+  ansible.builtin.git:
+    repo: "{{ project_repo }}"
+    dest: "{{ project_dest }}"
+    version: "{{ project_version }}"
+    key_file: "{{ github_key_file | default(omit) }}"
+    accept_hostkey: false
+    update: true
+    force: false
+    recursive: false
+  register: project_checkout
+
+- name: Display the checked-out commit
+  ansible.builtin.debug:
+    msg: "Project commit: {{ project_checkout.after }}"

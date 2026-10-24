@@ -1,0 +1,14 @@
+[hidden] { display: none !important; }
+body:is([data-page="chat"], [data-page="wishlist"], [data-page="profile"]):not([data-ready="true"]) main { visibility: hidden; }
+.notifications { position: fixed; bottom: 24px; right: 24px; z-index: 1000; display: grid; gap: 12px; max-width: min(380px, calc(100vw - 48px)); }
+.notification { padding: 16px 20px; border: 0; border-radius: 12px; background: #246547; color: #fff; box-shadow: 0 6px 24px #0002; cursor: pointer; text-align: left; font: inherit; overflow-wrap: anywhere; }
+.notification--error { background: #a33142; }
+.header__logout-button { background: none; border: 0; cursor: pointer; font: inherit; }
+.auth__button:disabled { opacity: .6; cursor: wait; }
+.header__nav { flex-wrap: wrap; }
+.header__auth-links .header__link { white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 768px) {
+    .header__nav { flex-direction: column; gap: 10px; }
+    .header__left { width: 100%; justify-content: space-between; }
+    .header__auth-links { width: 100%; }
+}

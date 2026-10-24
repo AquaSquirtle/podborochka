@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль — Подборочка</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/frontend.css">
+    <script type="module" src="/scripts/app.js"></script>
+</head>
+<body class="page" data-page="profile">
+<!-- component:header -->
+<main class="profile-page">
+    <section class="profile-card">
+        <div class="profile-card__avatar-block">
+            <img
+                    id="profile-avatar"
+                    class="profile-card__avatar"
+                    src="/images/default-avatar.svg"
+                    alt="Аватар пользователя"
+            >
+        </div>
+
+        <div class="profile-card__info">
+            <h1 class="profile-card__title">Профиль</h1>
+
+            <div class="profile-card__field">
+                <span class="profile-card__label">Имя</span>
+                <span id="profile-display-name" class="profile-card__value">Загрузка...</span>
+            </div>
+
+            <div class="profile-card__field">
+                <span class="profile-card__label">Email</span>
+                <span id="profile-email" class="profile-card__value">Загрузка...</span>
+            </div>
+
+            <div class="profile-card__field">
+                <span class="profile-card__label">Роль</span>
+                <span id="profile-role" class="profile-card__value">Загрузка...</span>
+            </div>
+
+            <form id="avatar-form" class="profile-card__upload-form">
+                <label class="profile-card__upload-label" for="avatar-file">
+                    Загрузить новый аватар
+                </label>
+                <input
+                        id="avatar-file"
+                        name="file"
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp"
+                        class="profile-card__file-input-hidden"
+                >
+
+                <label for="avatar-file" class="profile-card__file-button">
+                    Выбрать файл
+                </label>
+
+                <span id="file-name" class="profile-card__file-name">
+                    Файл не выбран
+                </span>
+
+                <button type="submit" class="button profile-card__upload-button">
+                    Сохранить аватар
+                </button>
+            </form>
+
+            <p id="profile-message" class="profile-card__message"></p>
+        </div>
+    </section>
+</main>
+<!-- component:footer -->
+</body>
+</html>

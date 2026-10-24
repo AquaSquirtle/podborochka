@@ -1,0 +1,62 @@
+---
+- name: Install Git and prerequisites for the Docker repository
+  ansible.builtin.apt:
+    name: [ca-certificates, git, acl]
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Create the APT signing key directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download Docker's official repository signing key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+
+- name: Enable the official Docker APT repository
+  ansible.builtin.apt_repository:
+    repo: >-
+      deb [arch={{ docker_architectures[ansible_facts['architecture']] }}
+      signed-by=/etc/apt/keyrings/docker.asc]
+      https://download.docker.com/linux/ubuntu
+      {{ ansible_facts['distribution_release'] }} stable
+    filename: docker
+    state: present
+    update_cache: true
+
+- name: Install Docker Engine, Buildx and Compose
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+
+- name: Start Docker and enable it at boot
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: Allow the deployment account to use Docker
+  ansible.builtin.user:
+    name: "{{ deploy_user }}"
+    groups: docker
+    append: true
+
+- name: Check Docker Engine
+  ansible.builtin.command:
+    argv: [docker, version]
+  changed_when: false
+
+- name: Check Docker Compose
+  ansible.builtin.command:
+    argv: [docker, compose, version]
+  changed_when: false

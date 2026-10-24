@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<section
+        class="auth"
+        th:fragment="authForm(title, fieldsFragment, submitText, noteText, noteLinkText, noteLinkHref, formId, formAction)"
+>
+    <h1 class="auth__title" th:text="${title}">Форма</h1>
+
+    <form
+            class="auth__form"
+            th:id="${formId}"
+            th:action="${formAction}"
+            method="post"
+            novalidate
+    >
+        <div th:if="${error}" class="auth__form-error" th:text="${error}">
+            Ошибка
+        </div>
+
+        <th:block th:replace="${fieldsFragment}"></th:block>
+
+        <button class="button auth__button" type="submit" th:text="${submitText}">
+            Отправить
+        </button>
+
+        <p class="auth__text">
+            <span th:text="${noteText}">Текст</span>
+            <a th:href="${noteLinkHref}" class="link" th:text="${noteLinkText}">Ссылка</a>
+        </p>
+    </form>
+</section>
+</body>
+</html>

@@ -1,0 +1,173 @@
+type Query {
+  products(page: Int = 0, size: Int = 20): ProductPage!
+  product(id: ID!): Product
+
+  me: User!
+
+  wishlistItems(page: Int = 0, size: Int = 20): WishlistItemPage!
+
+  conversations(page: Int = 0, size: Int = 20): ConversationPage!
+  conversation(id: ID!): Conversation!
+}
+
+type Mutation {
+  createProduct(input: CreateProductInput!): Product!
+  updateProduct(id: ID!, input: UpdateProductInput!): Product!
+  deleteProduct(id: ID!): Boolean!
+
+  updateMe(input: UpdateUserInput!): User!
+
+  saveWishlistItem(input: SaveWishlistItemInput!): WishlistItem!
+  deleteWishlistItem(id: ID!): Boolean!
+
+  createConversation(input: CreateConversationInput!): Conversation!
+  updateConversation(id: ID!, input: UpdateConversationInput!): Conversation!
+  deleteConversation(id: ID!): Boolean!
+
+  sendMessage(conversationId: ID!, input: SendMessageInput!): SendChatMessagePayload!
+}
+
+type Product {
+  id: ID!
+  marketplace: String!
+  title: String!
+  url: String!
+  imageUrl: String
+  price: Float
+  currency: String
+  rating: Float
+  createdAt: String!
+  updatedAt: String!
+}
+
+type User {
+  id: ID!
+  email: String!
+  displayName: String!
+}
+
+type WishlistItem {
+  id: ID!
+  productId: ID
+  recommendationId: ID
+  customTitle: String
+  customUrl: String
+  notes: String
+  isPurchased: Boolean!
+  createdAt: String!
+}
+
+type Conversation {
+  id: ID!
+  title: String
+  createdAt: String!
+  updatedAt: String!
+  messages(page: Int = 0, size: Int = 20): MessagePage!
+}
+
+type Message {
+  id: ID!
+  conversationId: ID!
+  role: String!
+  content: String!
+  createdAt: String!
+}
+
+type ChatRecommendation {
+  id: ID!
+  title: String!
+  description: String
+  reasoning: String
+  approximatePrice: Int
+  searchQuery: String
+  rankPosition: Int!
+  ozonSearchUrl: String
+  wildberriesSearchUrl: String
+  yandexMarketSearchUrl: String
+}
+
+type SendChatMessagePayload {
+  conversationId: ID!
+  prompt: String!
+  assistantMessage: String!
+  recipientSummary: String
+  recommendations: [ChatRecommendation!]!
+}
+
+type ProductPage {
+  content: [Product!]!
+  page: Int!
+  size: Int!
+  totalElements: Int!
+  totalPages: Int!
+}
+
+type WishlistItemPage {
+  content: [WishlistItem!]!
+  page: Int!
+  size: Int!
+  totalElements: Int!
+  totalPages: Int!
+}
+
+type ConversationPage {
+  content: [Conversation!]!
+  page: Int!
+  size: Int!
+  totalElements: Int!
+  totalPages: Int!
+}
+
+type MessagePage {
+  content: [Message!]!
+  page: Int!
+  size: Int!
+  totalElements: Int!
+  totalPages: Int!
+}
+
+input CreateProductInput {
+  marketplace: String!
+  title: String!
+  url: String!
+  imageUrl: String
+  price: Float
+  currency: String
+  rating: Float
+}
+
+input UpdateProductInput {
+  marketplace: String
+  title: String
+  url: String
+  imageUrl: String
+  price: Float
+  currency: String
+  rating: Float
+}
+
+input UpdateUserInput {
+  email: String
+  password: String
+  displayName: String
+}
+
+input SaveWishlistItemInput {
+  productId: ID
+  recommendationId: ID
+  customTitle: String
+  customUrl: String
+  notes: String
+}
+
+input CreateConversationInput {
+  title: String
+}
+
+input UpdateConversationInput {
+  title: String
+}
+
+input SendMessageInput {
+  prompt: String!
+}

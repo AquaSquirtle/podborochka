@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/head :: head('Ошибка — Podborochka')}"></th:block>
+</head>
+<body class="page">
+<main class="error-page">
+    <section class="error-card">
+        <div class="error-card__code" th:text="${status}">500</div>
+        <h1 class="error-card__title" th:text="${error}">Ошибка</h1>
+
+        <p class="error-card__text" th:if="${message}" th:text="${message}">
+            Что-то пошло не так.
+        </p>
+
+        <p class="error-card__text" th:unless="${message}">
+            Произошла ошибка при обработке запроса.
+        </p>
+
+        <p class="error-card__path" th:if="${path}">
+            URL: <span th:text="${path}">/chat</span>
+        </p>
+
+        <div class="error-card__actions">
+            <a th:href="@{/}" class="button">На главную</a>
+            <a th:href="@{/login/form}" class="button">Войти</a>
+        </div>
+    </section>
+</main>
+</body>
+</html>

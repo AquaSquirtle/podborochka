@@ -1,0 +1,59 @@
+---
+- name: Install SSH client
+  ansible.builtin.apt:
+    name: openssh-client
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Prepare GitHub access as the deployment account
+  become_user: "{{ deploy_user }}"
+  block:
+    - name: Create the SSH directory
+      ansible.builtin.file:
+        path: "{{ deploy_home }}/.ssh"
+        state: directory
+        mode: '0700'
+
+    - name: Generate a dedicated key without replacing an existing key
+      ansible.builtin.command:
+        argv:
+          - ssh-keygen
+          - -t
+          - ed25519
+          - -N
+          - ''
+          - -C
+          - podborochka-deploy
+          - -f
+          - "{{ github_key_file }}"
+        creates: "{{ github_key_file }}"
+
+    - name: Set private key permissions
+      ansible.builtin.file:
+        path: "{{ github_key_file }}"
+        mode: '0600'
+
+    - name: Obtain GitHub public host keys over HTTPS
+      ansible.builtin.uri:
+        url: https://api.github.com/meta
+        return_content: true
+        status_code: 200
+      register: github_metadata
+      changed_when: false
+
+    - name: Add the GitHub Ed25519 host key to known_hosts
+      ansible.builtin.known_hosts:
+        path: "{{ deploy_home }}/.ssh/known_hosts"
+        name: github.com
+        key: "github.com {{ item }}"
+      loop: "{{ github_metadata.json.ssh_keys | select('match', '^ssh-ed25519 ') | list }}"
+
+    - name: Read the public deployment key
+      ansible.builtin.slurp:
+        src: "{{ github_key_file }}.pub"
+      register: github_public_key
+
+    - name: Display the public key to add to GitHub Deploy keys
+      ansible.builtin.debug:
+        msg: "{{ github_public_key.content | b64decode | trim }}"

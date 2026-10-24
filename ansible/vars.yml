@@ -1,0 +1,9 @@
+---
+deploy_user: "{{ ansible_user | default('ubuntu') }}"
+project_repo: git@github.com:AquaSquirtle/podborochka.git
+project_version: HEAD
+project_dest: "{{ deploy_home }}/podborochka"
+github_key_file: "{{ deploy_home }}/.ssh/podborochka_github"
+docker_architectures:
+  x86_64: amd64
+  aarch64: arm64

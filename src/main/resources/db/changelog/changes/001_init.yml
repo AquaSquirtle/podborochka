@@ -1,0 +1,236 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-users
+      author: squirtleKKS
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE users (
+                  id BIGSERIAL PRIMARY KEY,
+                  email VARCHAR(255) NOT NULL,
+                  password_hash VARCHAR(255) NOT NULL,
+                  display_name VARCHAR(100) NOT NULL,
+                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  CONSTRAINT uq_users_email UNIQUE (email)
+              );
+      rollback:
+        - sql:
+            sql: DROP TABLE IF EXISTS users;
+
+  - changeSet:
+      id: 002-create-conversations
+      author: squirtleKKS
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE conversations (
+                  id BIGSERIAL PRIMARY KEY,
+                  user_id BIGINT NOT NULL,
+                  title VARCHAR(255),
+                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  CONSTRAINT fk_conversations_user
+                      FOREIGN KEY (user_id)
+                      REFERENCES users(id)
+                      ON DELETE CASCADE
+              );
+      rollback:
+        - sql:
+            sql: DROP TABLE IF EXISTS conversations;
+
+  - changeSet:
+      id: 003-create-messages
+      author: squirtleKKS
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE messages (
+                  id BIGSERIAL PRIMARY KEY,
+                  conversation_id BIGINT NOT NULL,
+                  role VARCHAR(20) NOT NULL,
+                  content TEXT NOT NULL,
+                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  CONSTRAINT fk_messages_conversation
+                      FOREIGN KEY (conversation_id)
+                      REFERENCES conversations(id)
+                      ON DELETE CASCADE,
+                  CONSTRAINT chk_messages_role
+                      CHECK (role IN ('user', 'assistant', 'system'))
+              );
+      rollback:
+        - sql:
+            sql: DROP TABLE IF EXISTS messages;
+
+  - changeSet:
+      id: 004-create-gift-search-requests
+      author: squirtleKKS
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE gift_search_requests (
+                  id BIGSERIAL PRIMARY KEY,
+                  conversation_id BIGINT NOT NULL,
+                  user_id BIGINT NOT NULL,
+                  raw_prompt TEXT NOT NULL,
+                  recipient_description TEXT,
+                  occasion VARCHAR(100),
+                  budget_min NUMERIC(10, 2),
+                  budget_max NUMERIC(10, 2),
+                  interests TEXT,
+                  status VARCHAR(30) NOT NULL DEFAULT 'created',
+                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  CONSTRAINT fk_gsr_conversation
+                      FOREIGN KEY (conversation_id)
+                      REFERENCES conversations(id)
+                      ON DELETE CASCADE,
+                  CONSTRAINT fk_gsr_user
+                      FOREIGN KEY (user_id)
+                      REFERENCES users(id)
+                      ON DELETE CASCADE,
+                  CONSTRAINT chk_gsr_status
+                      CHECK (status IN ('CREATED', 'PROCESSING', 'COMPLETED', 'FAILED')),
+                  CONSTRAINT chk_gsr_budget
+                      CHECK (
+                          budget_min IS NULL
+                          OR budget_max IS NULL
+                          OR budget_min <= budget_max
+                      )
+              );
+      rollback:
+        - sql:
+            sql: DROP TABLE IF EXISTS gift_search_requests;
+
+  - changeSet:
+      id: 005-create-products
+      author: squirtleKKS
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE products (
+                  id BIGSERIAL PRIMARY KEY,
+                  marketplace VARCHAR(100) NOT NULL,
+                  title VARCHAR(255) NOT NULL,
+                  url TEXT NOT NULL,
+                  image_url TEXT,
+                  price NUMERIC(10, 2),
+                  currency VARCHAR(10),
+                  rating NUMERIC(3,2),
+                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  CONSTRAINT chk_products_price
+                      CHECK (price IS NULL OR price >= 0),
+                  CONSTRAINT chk_products_rating
+                      CHECK (rating IS NULL OR (rating >= 0 AND rating <= 5))
+              );
+      rollback:
+        - sql:
+            sql: DROP TABLE IF EXISTS products;
+
+  - changeSet:
+      id: 006-create-gift-recommendations
+      author: squirtleKKS
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE gift_recommendations (
+                  id BIGSERIAL PRIMARY KEY,
+                  search_request_id BIGINT NOT NULL,
+                  product_id BIGINT,
+                  title VARCHAR(255) NOT NULL,
+                  description TEXT,
+                  reasoning TEXT,
+                  rank_position INT NOT NULL,
+                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  CONSTRAINT fk_gr_request
+                      FOREIGN KEY (search_request_id)
+                      REFERENCES gift_search_requests(id)
+                      ON DELETE CASCADE,
+                  CONSTRAINT fk_gr_product
+                      FOREIGN KEY (product_id)
+                      REFERENCES products(id)
+                      ON DELETE SET NULL,
+                  CONSTRAINT chk_gr_rank_position
+                      CHECK (rank_position > 0)
+              );
+      rollback:
+        - sql:
+            sql: DROP TABLE IF EXISTS gift_recommendations;
+
+  - changeSet:
+      id: 007-create-wishlist-items
+      author: squirtleKKS
+      changes:
+        - sql:
+            sql: |
+              CREATE TABLE wishlist_items (
+                  id BIGSERIAL PRIMARY KEY,
+                  user_id BIGINT NOT NULL,
+                  product_id BIGINT,
+                  recommendation_id BIGINT,
+                  custom_title VARCHAR(255),
+                  custom_url TEXT,
+                  notes TEXT,
+                  is_purchased BOOLEAN NOT NULL DEFAULT FALSE,
+                  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                  CONSTRAINT fk_wishlist_user
+                      FOREIGN KEY (user_id)
+                      REFERENCES users(id)
+                      ON DELETE CASCADE,
+                  CONSTRAINT fk_wishlist_product
+                      FOREIGN KEY (product_id)
+                      REFERENCES products(id)
+                      ON DELETE SET NULL,
+                  CONSTRAINT fk_wishlist_recommendation
+                      FOREIGN KEY (recommendation_id)
+                      REFERENCES gift_recommendations(id)
+                      ON DELETE SET NULL
+              );
+      rollback:
+        - sql:
+            sql: DROP TABLE IF EXISTS wishlist_items;
+
+  - changeSet:
+      id: 008-indexes-core
+      author: squirtleKKS
+      changes:
+        - sql:
+            sql: |
+              CREATE INDEX idx_conversations_user_id ON conversations(user_id);
+              CREATE INDEX idx_messages_conversation_id ON messages(conversation_id);
+              CREATE INDEX idx_gsr_user_id ON gift_search_requests(user_id);
+              CREATE INDEX idx_gsr_conversation_id ON gift_search_requests(conversation_id);
+              CREATE INDEX idx_products_marketplace ON products(marketplace);
+              CREATE INDEX idx_gr_request_id ON gift_recommendations(search_request_id);
+              CREATE INDEX idx_gr_product_id ON gift_recommendations(product_id);
+              CREATE INDEX idx_wishlist_user_id ON wishlist_items(user_id);
+      rollback:
+        - sql:
+            sql: |
+              DROP INDEX IF EXISTS idx_wishlist_user_id;
+              DROP INDEX IF EXISTS idx_gr_product_id;
+              DROP INDEX IF EXISTS idx_gr_request_id;
+              DROP INDEX IF EXISTS idx_products_marketplace;
+              DROP INDEX IF EXISTS idx_gsr_conversation_id;
+              DROP INDEX IF EXISTS idx_gsr_user_id;
+              DROP INDEX IF EXISTS idx_messages_conversation_id;
+              DROP INDEX IF EXISTS idx_conversations_user_id;
+  - changeSet:
+      id: 009-add-role-to-users
+      author: squirtleKKS
+      changes:
+        - sql:
+            sql: |
+              ALTER TABLE users
+              ADD COLUMN role VARCHAR(30) NOT NULL DEFAULT 'USER';
+
+              ALTER TABLE users
+              ADD CONSTRAINT chk_users_role
+              CHECK (role IN ('USER', 'ADMIN'));
+      rollback:
+        - sql:
+            sql: |
+              ALTER TABLE users DROP CONSTRAINT IF EXISTS chk_users_role;
+              ALTER TABLE users DROP COLUMN IF EXISTS role;

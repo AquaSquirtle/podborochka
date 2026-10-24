@@ -1,0 +1,16 @@
+<header class="header header--sticky" th:fragment="header(isAuthenticated, username)">
+    <nav class="header__nav">
+        <div class="header__left">
+            <a th:href="@{/}" class="header__logo link">
+                <img th:src="@{/images/logos/logo.png}" alt="Логотип" class="header__logo-image">
+            </a>
+
+            <div class="header__menu-row">
+                <a th:href="@{/chat}" class="header__link header__link--menu link">Чат</a>
+                <a th:href="@{/wishlist}" class="header__link header__link--menu link">Сохранённые</a>
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/auth-status :: authStatus(${isAuthenticated}, ${username})}"></div>
+    </nav>
+</header>

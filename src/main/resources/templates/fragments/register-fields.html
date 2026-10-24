@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="registerFields">
+    <label class="auth__label">
+        <input
+                class="auth__input"
+                id="register-name"
+                name="displayName"
+                type="text"
+                placeholder="Ваше имя"
+                required
+                minlength="2"
+                th:value="${displayName}"
+        >
+        <div class="auth__error" id="register-name-error"></div>
+    </label>
+
+    <label class="auth__label">
+        <input
+                class="auth__input"
+                id="register-email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                required
+                th:value="${email}"
+        >
+        <div class="auth__error" id="register-email-error"></div>
+    </label>
+
+    <label class="auth__label">
+        <input
+                class="auth__input"
+                id="register-password"
+                name="password"
+                type="password"
+                placeholder="Пароль"
+                required
+                minlength="6"
+        >
+        <div class="auth__error" id="register-password-error"></div>
+    </label>
+</th:block>
+</body>
+</html>

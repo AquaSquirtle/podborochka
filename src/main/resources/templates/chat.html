@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/head :: head('Podborochka — Чат с ИИ')}"></th:block>
+</head>
+<body class="page">
+<div th:replace="~{fragments/header :: header(${isAuthenticated}, ${username})}"></div>
+
+<main class="chat-layout">
+    <aside class="chat-sidebar">
+        <div class="chat-sidebar__header">
+            <h2 class="chat-sidebar__title">Мои чаты</h2>
+            <button type="button" class="button chat-sidebar__new-button" id="new-conversation-btn">
+                Новый чат
+            </button>
+        </div>
+
+        <div class="chat-sidebar__list" id="conversation-list">
+            <p class="chat-sidebar__empty">Загрузка чатов...</p>
+        </div>
+    </aside>
+
+    <section class="chat-main">
+        <div class="chat__window" id="chat-window">
+            <p class="chat__placeholder" id="chat-placeholder">
+                ИИ готов помочь — задайте вопрос!
+            </p>
+        </div>
+
+        <form class="chat__form" id="chat-form">
+            <input
+                    class="chat__input"
+                    id="chat-input"
+                    name="prompt"
+                    type="text"
+                    placeholder="Введите сообщение..."
+                    autocomplete="off"
+            >
+            <button type="submit" class="button chat__button" id="chat-submit">
+                Отправить
+            </button>
+        </form>
+    </section>
+</main>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="module" th:src="@{/scripts/chat-api.js}"></script>
+
+<div th:replace="~{fragments/footer :: footer(false)}"></div>
+</body>
+</html>

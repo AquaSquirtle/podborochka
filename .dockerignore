@@ -1,0 +1,15 @@
+# Only backend build inputs belong in the backend build context.
+**
+!Dockerfile
+!.dockerignore
+!gradlew
+!gradle/
+!gradle/**
+!build.gradle.kts
+!settings.gradle.kts
+!gradle.properties
+!src/
+!src/**
+**/.DS_Store
+**/.env
+**/.env.*

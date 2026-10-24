@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 011-add-avatar-url-to-users
+      author: openai
+      changes:
+        - sql:
+            sql: |
+              ALTER TABLE users
+              ADD COLUMN avatar_url TEXT;
+      rollback:
+        - sql:
+            sql: |
+              ALTER TABLE users
+              DROP COLUMN IF EXISTS avatar_url;

@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/001_init.yml
+  - include:
+      file: db/changelog/changes/002_add_recommendation_metadata.yml
+  - include:
+      file: db/changelog/changes/003_add_avatar_url_to_users.yml

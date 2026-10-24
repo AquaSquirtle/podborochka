@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="wishlist-item" th:fragment="wishlistItem(item)">
+    <a class="wishlist-item__title"
+       th:href="${item.link}"
+       th:text="${item.title}"
+       target="_blank">
+        Название подарка
+    </a>
+
+    <div class="wishlist-item__actions">
+        <button class="button wishlist-item__edit" type="button">Редактировать</button>
+        <button class="button wishlist-item__delete" type="button">Удалить</button>
+    </div>
+
+    <div class="wishlist-item__edit-fields">
+        <input class="wishlist-item__input-edit wishlist-item__input-edit--title"
+               type="text"
+               th:value="${item.title}">
+        <div class="wishlist-item__error wishlist-item__error--title"></div>
+
+        <input class="wishlist-item__input-edit wishlist-item__input-edit--link"
+               type="text"
+               th:value="${item.link}">
+        <div class="wishlist-item__error wishlist-item__error--link"></div>
+
+        <div class="wishlist-item__edit-actions">
+            <button class="button wishlist-item__save button--disabled" type="button">Сохранить</button>
+            <button class="button wishlist-item__cancel" type="button">Отмена</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

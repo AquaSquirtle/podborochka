@@ -1,0 +1,34 @@
+---
+- name: Verify existing Docker and Git checkout on the local Mac
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  vars:
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
+    project_version: HEAD
+    project_dest: /private/tmp/podborochka-ansible-check
+
+  tasks:
+    - name: Check the existing Docker Engine
+      ansible.builtin.command:
+        argv: [docker, version]
+      changed_when: false
+
+    - name: Check the existing Docker Compose
+      ansible.builtin.command:
+        argv: [docker, compose, version]
+      changed_when: false
+
+    - name: Read the configured GitHub remote without changing SSH settings
+      ansible.builtin.command:
+        argv: [git, -C, "{{ playbook_dir }}/..", remote, get-url, origin]
+      register: configured_remote
+      changed_when: false
+
+    - name: Use the existing GitHub connection
+      ansible.builtin.set_fact:
+        project_repo: "{{ configured_remote.stdout }}"
+
+    - name: Verify the shared Git checkout tasks
+      ansible.builtin.import_tasks: tasks/checkout.yml

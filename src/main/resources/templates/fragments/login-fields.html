@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="loginFields">
+    <label class="auth__label">
+        <input
+                class="auth__input"
+                id="login-email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                required
+                th:value="${email}"
+        >
+        <div class="auth__error" id="login-email-error"></div>
+    </label>
+
+    <label class="auth__label">
+        <input
+                class="auth__input"
+                id="login-password"
+                name="password"
+                type="password"
+                placeholder="Пароль"
+                required
+                minlength="6"
+        >
+        <div class="auth__error" id="login-password-error"></div>
+    </label>
+</th:block>
+</body>
+</html>

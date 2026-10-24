@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="authStatus(isAuthenticated, username)">
+    <div class="header__auth-links" th:if="${isAuthenticated}">
+        <div class="header__auth-links" th:if="${isAuthenticated}">
+            <a th:href="@{/profile}" class="header__link link">
+                Вы вошли как <span th:text="${username}">Пользователь</span>
+            </a>
+
+            <form th:action="@{/logout}" method="post" class="header__logout-form">
+                <button type="submit" class="header__link link header__logout-button">Выход</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="header__auth-links" th:unless="${isAuthenticated}">
+        <a th:href="@{/register/form}" class="header__link link">Регистрация</a>
+        <a th:href="@{/login/form}" class="header__link link">Вход</a>
+    </div>
+</div>
+</body>
+</html>

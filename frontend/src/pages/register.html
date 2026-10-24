@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создание аккаунта — Подборочка</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/frontend.css">
+    <script type="module" src="/scripts/app.js"></script>
+</head>
+<body class="page" data-page="register">
+<!-- component:header -->
+<main>
+<section class="auth">
+    <h1 class="auth__title">Создание аккаунта</h1>
+    <form class="auth__form" id="register-form">
+        <p class="auth__form-error" id="auth-error" role="alert" hidden></p>
+        
+    <label class="auth__label">
+        <input
+                class="auth__input"
+                id="register-name"
+                name="displayName" maxlength="100" autocomplete="name"
+                type="text"
+                placeholder="Ваше имя"
+                required
+                minlength="2"
+        >
+        <div class="auth__error" id="register-name-error"></div>
+    </label>
+
+    <label class="auth__label">
+        <input
+                class="auth__input"
+                id="register-email"
+                name="email" maxlength="255" autocomplete="email"
+                type="email"
+                placeholder="Email"
+                required
+        >
+        <div class="auth__error" id="register-email-error"></div>
+    </label>
+
+    <label class="auth__label">
+        <input
+                class="auth__input"
+                id="register-password"
+                name="password" maxlength="255" autocomplete="new-password"
+                type="password"
+                placeholder="Пароль"
+                required
+                minlength="6"
+        >
+        <div class="auth__error" id="register-password-error"></div>
+    </label>
+
+        <button class="button auth__button" type="submit">Зарегистрироваться</button>
+        <p class="auth__text">Уже есть аккаунт? <a href="/login/form" class="link">Войти</a></p>
+    </form>
+</section>
+</main>
+<!-- component:footer -->
+</body>
+</html>

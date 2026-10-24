@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сохранённые подарки — Подборочка</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link rel="stylesheet" href="/styles/frontend.css">
+    <script type="module" src="/scripts/app.js"></script>
+</head>
+<body class="page" data-page="wishlist">
+<!-- component:header -->
+<main class="wishlist">
+    <h1 class="wishlist__title">Список подарков</h1>
+
+    <form class="wishlist__form" id="wishlist-form">
+        <div class="wishlist__field">
+            <input
+                    id="gift-title"
+                    name="title"
+                    type="text"
+                    placeholder="Название подарка"
+                    class="wishlist__input"
+            >
+            <span class="wishlist__error" id="gift-title-error"></span>
+        </div>
+
+        <div class="wishlist__field">
+            <input
+                    id="gift-link"
+                    name="link"
+                    type="text"
+                    placeholder="Ссылка на товар"
+                    class="wishlist__input"
+            >
+            <span class="wishlist__error" id="gift-link-error"></span>
+        </div>
+
+        <button type="submit" class="button wishlist__button">
+            Добавить
+        </button>
+    </form>
+
+    <div class="wishlist__list" id="wishlist-list">
+        <p class="wishlist__empty">Загрузка...</p>
+    </div>
+
+    <template id="wishlist-item-template">
+        <div class="wishlist-item">
+            <div class="wishlist-item__view">
+                <a
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="wishlist-item__title"
+                ></a>
+
+                <div class="wishlist-item__actions">
+                    <button type="button" class="button wishlist-item__edit">Редактировать</button>
+                    <button type="button" class="button wishlist-item__delete">Удалить</button>
+                </div>
+            </div>
+
+            <div class="wishlist-item__edit-form">
+                <div class="wishlist-item__field">
+                    <input
+                            type="text"
+                            class="wishlist-item__input-edit wishlist-item__input-edit--title"
+                            placeholder="Название подарка"
+                    >
+                    <span class="wishlist-item__error wishlist-item__error--title"></span>
+                </div>
+
+                <div class="wishlist-item__field">
+                    <input
+                            type="text"
+                            class="wishlist-item__input-edit wishlist-item__input-edit--link"
+                            placeholder="Ссылка"
+                    >
+                    <span class="wishlist-item__error wishlist-item__error--link"></span>
+                </div>
+
+                <div class="wishlist-item__edit-actions">
+                    <button type="button" class="button wishlist-item__save button--disabled">
+                        Сохранить
+                    </button>
+                    <button type="button" class="button wishlist-item__cancel">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </template>
+</main>
+<!-- component:footer -->
+</body>
+</html>

@@ -1,0 +1,36 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  server:
+    error:
+      include-message: always
+      include-binding-errors: always
+      include-exception: true
+      include-stacktrace: on_param
+      whitelabel:
+        enabled: false
+  graphql:
+    graphiql:
+      enabled: true
+    schema:
+      printer:
+        enabled: true
+gemini:
+  api-key: ${GEMINI_API_KEY}
+  model: gemini-3.1-flash-lite-preview
+
+storage:
+  endpoint: https://storage.yandexcloud.net
+  bucket: podborochka-avatar
+  access-key: ${YC_ACCESS_KEY}
+  secret-key: ${YC_SECRET_KEY}
+  public-base-url: https://storage.yandexcloud.net/podborochka-avatar

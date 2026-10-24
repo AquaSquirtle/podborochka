@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer class="footer" th:fragment="footer(showBanner)">
+    <div class="footer__banner" th:if="${showBanner}">Рекламный баннер • Ваше предложение здесь</div>
+    <p class="footer__text">&copy; 2025 Podborochka</p>
+    <span class="footer__note">Все права защищены</span>
+    <div
+        class="footer__server-time"
+        th:if="${serverElapsedTimeMs != null}"
+        th:text="'Серверная обработка: ' + ${serverElapsedTimeMs} + ' мс'">
+        Серверная обработка: 0 мс
+    </div>
+</footer>
+</body>
+</html>
