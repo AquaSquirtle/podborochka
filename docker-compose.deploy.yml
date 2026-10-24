@@ -18,7 +18,7 @@ services:
       retries: 20
 
   backend:
-    image: ${REGISTRY_ADDRESS:-localhost:5050}/podborochka-backend:${APP_VERSION:-0.2.0}
+    image: ${REGISTRY_ADDRESS:-localhost:5050}/podborochka-backend:${APP_VERSION:-1.0.0}
     restart: unless-stopped
     env_file: [.env]
     environment:
@@ -36,7 +36,7 @@ services:
       retries: 10
 
   frontend:
-    image: ${REGISTRY_ADDRESS:-localhost:5050}/podborochka-frontend:${APP_VERSION:-0.2.0}
+    image: ${REGISTRY_ADDRESS:-localhost:5050}/podborochka-frontend:${APP_VERSION:-1.0.0}
     restart: unless-stopped
     ports:
       - "${FRONTEND_PORT:-8082}:80"

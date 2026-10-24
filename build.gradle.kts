@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "org.podborochka"
-version = "1.0-SNAPSHOT"
+version = file("VERSION").readText().trim()
 
 repositories {
     mavenCentral()

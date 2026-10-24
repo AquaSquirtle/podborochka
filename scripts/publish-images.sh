@@ -2,7 +2,7 @@
 set -eu
 
 cd "$(dirname "$0")/.."
-version=${1:-0.2.0}
+version=${1:-$(cat VERSION)}
 mode=${2:-}
 registry_address=${REGISTRY_ADDRESS:-localhost:5050}
 
